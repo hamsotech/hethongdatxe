@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading... - RideConnect</title>
+    <script>
+      // Kiểm tra trạng thái đăng nhập
+      const role = localStorage.getItem('currentUserRole');
+      if (role === 'driver') {
+          window.location.replace('/driver/dashboard.html');
+      } else if (role === 'admin') {
+          window.location.replace('/admin/dashboard.html');
+      } else {
+          // Chưa đăng nhập thì vào trang đăng nhập form
+          window.location.replace('/login.html');
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

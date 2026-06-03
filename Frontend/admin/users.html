@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Khách hàng</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-layout" id="admin-users">
+        <aside class="sidebar">
+            <div class="sidebar__logo">RideConnect Admin</div>
+            <nav class="sidebar__menu">
+                <a href="dashboard.html" class="sidebar__link">Tổng quan</a>
+                <a href="users.html" class="sidebar__link sidebar__link--active">Khách hàng</a>
+                <a href="drivers.html" class="sidebar__link">Tài xế</a>
+                <a href="trips.html" class="sidebar__link">Chuyến xe</a>
+                <a href="reports.html" class="sidebar__link">Báo cáo</a>
+            </nav>
+        </aside>
+        <main class="content-area">
+            <h1 class="page-title">Quản lý khách hàng</h1>
+            
+            <div class="toolbar">
+                <input type="text" class="input-control" id="search-user" placeholder="Tìm tên hoặc SĐT khách hàng...">
+                <select class="input-control" id="filter-user-status" style="max-width: 250px;">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="active">Đang hoạt động</option>
+                    <option value="locked">Bị khóa</option>
+                </select>
+                <button class="btn btn--primary" id="btn-search">Tìm kiếm</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã KH</th>
+                            <th>Họ tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Số chuyến</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+                        <tr>
+                            <td>1</td>
+                            <td>CUS-1021</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>0901234567</td>
+                            <td>nguyenvana@email.com</td>
+                            <td>45</td>
+                            <td><span class="badge badge--success">Đang hoạt động</span></td>
+                            <td>
+                                <button class="action-btn action-btn--view">Xem chi tiết</button>
+                                <button class="action-btn action-btn--lock">Khóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>CUS-1022</td>
+                            <td>Lê Thị B</td>
+                            <td>0912345678</td>
+                            <td>lethib@email.com</td>
+                            <td>12</td>
+                            <td><span class="badge badge--danger">Bị khóa</span></td>
+                            <td>
+                                <button class="action-btn action-btn--view">Xem chi tiết</button>
+                                <button class="action-btn action-btn--unlock">Mở khóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

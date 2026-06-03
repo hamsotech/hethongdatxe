@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài xế - Màn hình chính</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/driver.css">
+</head>
+<body>
+    <div class="mobile-container" id="driver-app">
+        <header class="header">
+            <div class="header__user">
+                <span class="header__greeting">Chào, Nguyễn Tài Xế</span>
+            </div>
+            <div class="header__status">
+                <label class="toggle" id="status-switch">
+                    <input type="checkbox" class="toggle__input" id="toggle-online" checked>
+                    <span class="toggle__slider"></span>
+                </label>
+            </div>
+        </header>
+
+        <div class="stats-card">
+            <div class="stats-card__item">
+                <div class="stats-card__value" id="today-revenue">1.250k</div>
+                <div class="stats-card__label">Doanh thu nay</div>
+            </div>
+            <div class="stats-card__item">
+                <div class="stats-card__value" id="today-trips">12</div>
+                <div class="stats-card__label">Chuyến xe</div>
+            </div>
+            <div class="stats-card__item">
+                <div class="stats-card__value" id="driver-rating">4.9 ★</div>
+                <div class="stats-card__label">Đánh giá</div>
+            </div>
+        </div>
+
+        <div class="map-placeholder" id="main-map">
+            <div class="radar" id="radar-wave"></div>
+            <span class="map-placeholder__text" id="map-status-text">Đang quét tìm khách...</span>
+        </div>
+
+        <!-- Trạng thái 1: Request -->
+        <div class="bottom-sheet" id="sheet-requested">
+            <div class="bottom-sheet__title">Chuyến xe mới (Cách 2km)</div>
+            <p class="bottom-sheet__info">Khách hàng: <strong>Trần Văn Khách</strong></p>
+            <p class="bottom-sheet__info">Điểm đón: 123 Đường Số 1, Quận 1</p>
+            <p class="bottom-sheet__info">Điểm đến: 456 Đường Số 2, Quận 2</p>
+            <p class="bottom-sheet__info">Giá dự kiến: <strong style="color: var(--color-blue);">85.000 VNĐ</strong></p>
+            <button class="bottom-sheet__action btn--success" id="btn-accept-trip">Nhận chuyến <span id="countdown">(10s)</span></button>
+        </div>
+
+        <!-- Trạng thái 2: OnTrip -->
+        <div class="bottom-sheet" id="sheet-ontrip">
+            <div class="bottom-sheet__title">Đang trong chuyến</div>
+            <p class="bottom-sheet__info">Đang đến: 456 Đường Số 2, Quận 2</p>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button class="btn btn--outline" id="btn-contact-customer" style="flex: 1;">Liên lạc khách</button>
+                <button class="btn btn--success" id="btn-finish-trip" style="flex: 1;">Hoàn thành</button>
+            </div>
+        </div>
+
+        <!-- Trạng thái 3: Payment Pending -->
+        <div class="bottom-sheet" id="sheet-payment">
+            <div class="bottom-sheet__title" style="text-align: center;">Thanh toán chuyến đi</div>
+            <p class="bottom-sheet__info" style="text-align: center;">Tổng tiền thu khách (Tiền mặt)</p>
+            <p style="text-align: center; margin: 1rem 0;"><strong style="font-size: 2rem; color: var(--color-blue);">85.000 VNĐ</strong></p>
+            <button class="bottom-sheet__action btn--success" id="btn-confirm-payment">Xác nhận đã thu tiền</button>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="bottom-nav__item bottom-nav__item--active">Trang chủ</a>
+            <a href="trips.html" class="bottom-nav__item">Chuyến xe</a>
+            <a href="earnings.html" class="bottom-nav__item">Thu nhập</a>
+            <a href="profile.html" class="bottom-nav__item">Cá nhân</a>
+        </nav>
+    </div>
+    <script src="../js/driver/dashboard.js"></script>
+</body>
+</html>
