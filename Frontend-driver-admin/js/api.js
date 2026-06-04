@@ -1,1 +1,0 @@
-/** Dummy API configuration file */

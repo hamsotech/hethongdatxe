@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -73,80 +72,4 @@
     <script src="/js/map.js" defer></script>
     <script src="/js/customer/booking.js" defer></script>
 </body>
-=======
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt xe</title>
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/customer.css">
-</head>
-<body>
-    <div class="app-container">
-        <header class="header header--with-back">
-            <button class="header__back-btn" id="btn-back" aria-label="Quay lại">
-                <span class="icon">⬅️</span>
-            </button>
-            <h1 class="header__title">Đặt xe</h1>
-        </header>
-
-        <main class="main-content main-content--booking">
-            <section class="map-section map-section--small">
-                <div id="booking-map" class="map-container"></div>
-            </section>
-
-            <section class="booking-form">
-                <div class="location-inputs">
-                    <div class="input-group">
-                        <span class="input-group__icon">🟢</span>
-                        <input type="text" id="pickup-location" class="input-group__field" placeholder="Điểm đón..." required>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group__icon">📍</span>
-                        <input type="text" id="dropoff-location" class="input-group__field" placeholder="Điểm đến..." required>
-                    </div>
-                </div>
-
-                <div class="vehicle-selection">
-                    <h3 class="vehicle-selection__title">Chọn loại xe</h3>
-                    <div class="vehicle-list">
-                        <label class="vehicle-card" for="vehicle-bike">
-                            <input type="radio" name="vehicle_type" id="vehicle-bike" value="bike" class="vehicle-card__radio" checked>
-                            <div class="vehicle-card__content">
-                                <span class="vehicle-card__icon">🏍️</span>
-                                <div class="vehicle-card__info">
-                                    <span class="vehicle-card__name">Xe máy</span>
-                                    <span class="vehicle-card__time">5 phút</span>
-                                </div>
-                                <span class="vehicle-card__price" id="price-bike">...</span>
-                            </div>
-                        </label>
-                        <label class="vehicle-card" for="vehicle-car">
-                            <input type="radio" name="vehicle_type" id="vehicle-car" value="car" class="vehicle-card__radio">
-                            <div class="vehicle-card__content">
-                                <span class="vehicle-card__icon">🚗</span>
-                                <div class="vehicle-card__info">
-                                    <span class="vehicle-card__name">Ô tô 4 chỗ</span>
-                                    <span class="vehicle-card__time">7 phút</span>
-                                </div>
-                                <span class="vehicle-card__price" id="price-car">...</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <button class="btn btn--primary btn--full-width" id="btn-confirm-booking">
-                    Xác nhận đặt xe
-                </button>
-            </section>
-        </main>
-    </div>
-
-    <script src="/js/api.js" defer></script>
-    <script src="/js/map.js" defer></script>
-    <script src="/js/customer/booking.js" defer></script>
-</body>
->>>>>>> Stashed changes
 </html>

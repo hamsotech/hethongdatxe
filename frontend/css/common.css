@@ -1,176 +1,104 @@
-/* =========================================
-   BIẾN HỆ THỐNG (CSS VARIABLES)
-   ========================================= */
 :root {
-    /* Màu sắc chủ đạo (Giả sử chọn màu xanh lá phong cách Grab/Gojek) */
-    --primary-color: #00b14f; 
-    --primary-hover: #009140;
-    --secondary-color: #f3f4f6;
-    
-    /* Trạng thái */
-    --success-color: #10b981;
-    --danger-color: #ef4444;
-    --warning-color: #f59e0b;
-    
-    /* Màu chữ và nền */
-    --text-main: #1f2937;
-    --text-muted: #6b7280;
-    --bg-white: #ffffff;
-    --bg-gray: #f9fafb;
-    --border-color: #e5e7eb;
-    
-    /* Kích thước & Đổ bóng */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 16px;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-    
-    /* Font */
-    --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --color-white: #ffffff;
+  --color-blue: #0056b3;
+  --color-blue-light: #e6f0fa;
+  --color-green: #28a745;
+  --color-red: #dc3545;
+  --color-yellow: #ffc107;
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-text-main: #333333;
+  --color-text-muted: #6c757d;
+  --color-border: #dee2e6;
+  --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+  --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
+  --font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* =========================================
-   RESET & GLOBAL STYLES
-   ========================================= */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: var(--font-family);
-    color: var(--text-main);
-    background-color: #e5e7eb; /* Màu nền ngoài viền app cho Desktop */
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+  font-family: var(--font-family);
+  color: var(--color-text-main);
+  background-color: var(--color-gray-100);
 }
 
-/* Khung ứng dụng (Giả lập màn hình điện thoại trên Desktop) */
-.app-container {
-    max-width: 480px;
-    margin: 0 auto;
-    background-color: var(--bg-gray);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    overflow-x: hidden;
-    padding-bottom: 70px; /* Chừa chỗ cho bottom-nav */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* =========================================
-   CÁC COMPONENT DÙNG CHUNG (UI KIT)
-   ========================================= */
-/* Header */
-.header {
-    background-color: var(--bg-white);
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+ul {
+  list-style: none;
 }
 
-.header__title {
-    font-size: 1.25rem;
-    font-weight: 600;
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
 }
 
-.header__back-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* Nút bấm (Buttons) */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  text-align: center;
 }
 
-.btn--primary {
-    background-color: var(--primary-color);
-    color: white;
+.btn--primary { background: var(--color-blue); color: var(--color-white); }
+.btn--success { background: var(--color-green); color: var(--color-white); }
+.btn--danger { background: var(--color-red); color: var(--color-white); }
+.btn--warning { background: var(--color-yellow); color: var(--color-text-main); }
+.btn--outline { background: transparent; border: 1px solid var(--color-blue); color: var(--color-blue); }
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: inline-block;
 }
 
-.btn--primary:active { background-color: var(--primary-hover); }
+.badge--success { background: var(--color-green); color: var(--color-white); }
+.badge--warning { background: var(--color-yellow); color: var(--color-text-main); }
+.badge--danger { background: var(--color-red); color: var(--color-white); }
 
-.btn--secondary {
-    background-color: var(--secondary-color);
-    color: var(--text-main);
+.input-control {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  font-family: inherit;
+  font-size: 1rem;
+}
+.input-control:focus {
+  outline: none;
+  border-color: var(--color-blue);
 }
 
-.btn--danger {
-    background-color: var(--danger-color);
-    color: white;
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--color-gray-200);
+  margin-bottom: 1rem;
 }
 
-.btn--full-width {
-    width: 100%;
-    margin-top: 12px;
+.tabs__btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 1rem;
 }
 
-/* Form & Inputs */
-.form-group { margin-bottom: 16px; }
-
-.form-group__label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    font-size: 0.9rem;
+.tabs__btn--active {
+  color: var(--color-blue);
+  border-bottom-color: var(--color-blue);
 }
-
-.form-group__input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.form-group__input:focus { border-color: var(--primary-color); }
-
-/* Thanh điều hướng dưới (Bottom Navigation) */
-.bottom-nav {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--bg-white);
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    z-index: 100;
-}
-
-.bottom-nav__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    gap: 4px;
-}
-
-.bottom-nav__icon { font-size: 1.5rem; }
-
-.bottom-nav__item--active { color: var(--primary-color); }
