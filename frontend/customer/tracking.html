@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -43,4 +44,51 @@
     <script src="/js/socket.js" defer></script>
     <script src="/js/customer/tracking.js" defer></script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theo dõi chuyến đi</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/customer.css">
+</head>
+<body>
+    <div class="app-container app-container--tracking">
+        <div id="tracking-map" class="map-fullscreen"></div>
+
+        <div class="trip-status-banner">
+            <h2 class="trip-status-banner__text" id="trip-status-text">Đang tìm tài xế...</h2>
+        </div>
+
+        <section class="driver-info-card" id="driver-info-card">
+            <div class="driver-profile">
+                <img src="/assets/images/driver-default.png" alt="Tài xế" class="driver-profile__avatar" id="driver-avatar">
+                <div class="driver-profile__details">
+                    <h3 class="driver-profile__name" id="driver-name">Nguyễn Văn A</h3>
+                    <div class="driver-profile__rating">
+                        <span class="icon">⭐</span>
+                        <span id="driver-rating">4.9</span>
+                    </div>
+                </div>
+                <div class="driver-profile__vehicle">
+                    <span class="vehicle-plate" id="vehicle-plate">59-A1 12345</span>
+                    <span class="vehicle-desc" id="vehicle-desc">Honda Vision - Trắng</span>
+                </div>
+            </div>
+            
+            <div class="tracking-actions">
+                <button class="btn btn--icon btn--success" id="btn-call-driver">📞 Gọi điện</button>
+                <button class="btn btn--icon btn--danger" id="btn-cancel-trip">❌ Hủy chuyến</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/map.js" defer></script>
+    <script src="/js/socket.js" defer></script>
+    <script src="/js/customer/tracking.js" defer></script>
+</body>
+>>>>>>> Stashed changes
 </html>

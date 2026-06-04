@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -40,4 +41,48 @@
     <script src="/js/api.js" defer></script>
     <script src="/js/customer/rating.js" defer></script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đánh giá chuyến đi</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/customer.css">
+</head>
+<body>
+    <div class="app-container app-container--centered">
+        <main class="rating-card">
+            <h1 class="rating-card__title">Chuyến đi hoàn tất!</h1>
+            <p class="rating-card__subtitle">Vui lòng đánh giá trải nghiệm của bạn với tài xế</p>
+
+            <div class="rating-driver-info">
+                <img src="/assets/images/driver-default.png" alt="Tài xế" class="rating-driver-info__avatar" id="rating-driver-avatar">
+                <h3 class="rating-driver-info__name" id="rating-driver-name">Nguyễn Văn A</h3>
+            </div>
+
+            <div class="star-rating" id="star-rating-container">
+                <span class="star-rating__star" data-value="1">☆</span>
+                <span class="star-rating__star" data-value="2">☆</span>
+                <span class="star-rating__star" data-value="3">☆</span>
+                <span class="star-rating__star" data-value="4">☆</span>
+                <span class="star-rating__star" data-value="5">☆</span>
+            </div>
+
+            <div class="form-group">
+                <textarea id="rating-feedback" class="form-group__input form-group__input--textarea" placeholder="Để lại nhận xét của bạn (Không bắt buộc)..." rows="4"></textarea>
+            </div>
+
+            <div class="rating-actions">
+                <button class="btn btn--primary btn--full-width" id="btn-submit-rating">Gửi đánh giá</button>
+                <button class="btn btn--text btn--full-width" id="btn-skip-rating">Bỏ qua</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/customer/rating.js" defer></script>
+</body>
+>>>>>>> Stashed changes
 </html>
