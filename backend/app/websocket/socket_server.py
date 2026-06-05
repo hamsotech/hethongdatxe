@@ -11,4 +11,4 @@ def init_websocket(app):
     from . import customer_events
     from . import driver_events
     
-    print("[WEBSOCKET] Hệ thống Realtime đã sẵn sàng hành động!")
+    print("[WEBSOCKET] He thong Realtime da san sang hanh dong!")

@@ -4,35 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập - RideConnect</title>
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/login.css?v=1.1">
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
             <h1 class="login-title">RideConnect</h1>
             <p class="login-subtitle">Đăng nhập vào hệ thống</p>
-            
+
+            <!-- TABS chọn kiểu đăng nhập -->
+            <div style="display:flex; justify-content:space-around; margin-bottom:1.5rem; border-bottom:2px solid #f1f5f9; padding-bottom:0.5rem;">
+                <span id="tab-login-password" style="font-weight:700; cursor:pointer; color:var(--color-blue); border-bottom:2px solid var(--color-blue); padding-bottom:0.5rem; width:50%; text-align:center;">Mật khẩu</span>
+                <span id="tab-login-otp" style="font-weight:500; cursor:pointer; color:var(--color-text-muted); padding-bottom:0.5rem; width:50%; text-align:center;">Mã OTP</span>
+            </div>
+
             <form id="login-form">
                 <div class="form-group">
-                    <label for="login-username">Số điện thoại / Email</label>
-                    <input type="text" id="login-username" class="input-control" style="width: 100%;" placeholder="Nhập tài khoản" required>
+                    <label for="login-username" id="label-username">Email / Số điện thoại</label>
+                    <input type="text" id="login-username" class="input-control"
+                        placeholder="Nhập tài khoản" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="login-password-group">
                     <label for="login-password">Mật khẩu</label>
-                    <input type="password" id="login-password" class="input-control" style="width: 100%;" placeholder="Nhập mật khẩu" required>
+                    <input type="password" id="login-password" class="input-control"
+                        placeholder="Nhập mật khẩu" required>
                 </div>
-                <div class="form-options">
+                <div class="form-group" id="login-otp-group" style="display:none;">
+                    <label for="login-otp">Mã xác thực OTP (6 số)</label>
+                    <input type="text" id="login-otp" class="input-control"
+                        placeholder="123456" maxlength="6" style="text-align:center; font-size:1.2rem; letter-spacing:0.3rem;">
+                </div>
+                <div class="form-options" id="login-options-group">
                     <label><input type="checkbox" id="login-remember"> Ghi nhớ đăng nhập</label>
                     <a href="#" class="forgot-password">Quên mật khẩu?</a>
                 </div>
-                <button type="submit" class="btn btn--primary" style="width: 100%; padding: 0.75rem; font-size: 1.1rem;">Đăng nhập</button>
+                
+                <button type="button" id="btn-send-login-otp" class="btn btn--outline" style="width:100%;padding:0.75rem;font-size:1.1rem;margin-bottom:10px;display:none;">
+                    Gửi mã đăng nhập
+                </button>
+                <button type="submit" id="btn-login-submit" class="btn btn--primary" style="width:100%;padding:0.75rem;font-size:1.1rem;">
+                    Đăng nhập
+                </button>
             </form>
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <span style="color: var(--color-text-muted); font-size: 0.875rem;">Chưa có tài khoản? <a href="/register.html" style="color: var(--color-blue); font-weight: 600;">Đăng ký ngay</a></span>
+
+            <div style="text-align:center;margin-top:1.5rem;">
+                <span style="color:var(--color-text-muted);font-size:0.875rem;">
+                    Chưa có tài khoản?
+                    <a href="/register.html" style="color:var(--color-blue);font-weight:600;">Đăng ký ngay</a>
+                </span>
             </div>
         </div>
     </div>
+
+    <!-- Modal Quên mật khẩu (Forgot Password Modal) -->
+    <div id="forgot-password-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+        <div style="background:#fff; border-radius:16px; width:100%; max-width:380px; padding:2rem; box-shadow:0 12px 30px rgba(0,0,0,0.25); text-align:center;">
+            <h3 style="margin-bottom:0.5rem; font-size:1.4rem; color:var(--color-blue); font-weight:700;">Khôi phục mật khẩu</h3>
+            <p id="forgot-subtitle" style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1.5rem;">Vui lòng nhập Email / SĐT để nhận mã OTP khôi phục:</p>
+            <form id="forgot-password-form" style="display:flex; flex-direction:column; gap:12px;">
+                <input type="text" id="forgot-email" class="input-control" placeholder="Nhập email hoặc số điện thoại" required style="padding:0.75rem; border:1px solid var(--color-border); border-radius:8px; width:100%; box-sizing:border-box;">
+                
+                <div id="forgot-otp-fields" style="display:none; flex-direction:column; gap:12px;">
+                    <input type="text" id="forgot-otp" class="input-control" placeholder="Nhập mã OTP 6 số" maxlength="6" style="padding:0.75rem; border:1px solid var(--color-border); border-radius:8px; width:100%; box-sizing:border-box; text-align:center;">
+                    <input type="password" id="forgot-new-password" class="input-control" placeholder="Nhập mật khẩu mới" style="padding:0.75rem; border:1px solid var(--color-border); border-radius:8px; width:100%; box-sizing:border-box;">
+                </div>
+
+                <button type="submit" id="btn-forgot-submit" class="btn btn--primary" style="width:100%; padding:0.75rem; font-size:1rem; font-weight:600;">Gửi yêu cầu OTP</button>
+                <button type="button" id="btn-close-forgot" class="btn btn--secondary" style="width:100%; padding:0.75rem; font-size:1rem;">Hủy</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal chọn vai trò khi tài khoản có đa vai trò (Dual-role) -->
+    <div id="role-select-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+        <div style="background:#fff; border-radius:16px; width:100%; max-width:380px; padding:2rem; box-shadow:0 12px 30px rgba(0,0,0,0.25); text-align:center;">
+            <h3 style="margin-bottom:0.5rem; font-size:1.4rem; color:var(--color-blue); font-weight:700;">Lựa chọn vai trò</h3>
+            <p style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1.5rem;">Tài khoản của bạn liên kết với nhiều vai trò. Vui lòng chọn giao diện để tiếp tục:</p>
+            <div id="role-options-list" style="display:flex; flex-direction:column; gap:12px; margin-bottom:1rem;">
+                <!-- Các nút chọn vai trò sẽ được tạo động bằng JS -->
+            </div>
+        </div>
+    </div>
+
     <script src="/js/login.js"></script>
 </body>
 </html>

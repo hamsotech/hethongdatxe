@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 
 from app.routes.auth import auth_bp
@@ -7,10 +7,12 @@ from app.routes.driver import driver_bp
 from app.routes.admin import admin_bp
 from app.websocket.socket_server import init_websocket
 
-
+import os
 def create_app():
 
-    app = Flask(__name__)
+    app = Flask(__name__,
+                static_folder=os.path.join(os.path.dirname(__file__), '../../frontend/frontend'),
+                static_url_path='')
 
     CORS(app)
 
@@ -33,5 +35,8 @@ def create_app():
     )
 
     init_websocket(app)
-
+    @app.route('/')
+    @app.route('/<path:path>')
+    def serve_frontend(path='index.html'):
+        return send_from_directory(app.static_folder, path)
     return app

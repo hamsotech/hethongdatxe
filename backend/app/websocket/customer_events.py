@@ -22,3 +22,37 @@ def handle_ride_request(data):
         'pickup_location': pickup_loc,
         'drop_location': drop_loc
     }, broadcast=True)
+
+@socketio.on('join_trip_room')
+def handle_join_trip(data):
+    trip_id = str(data.get('trip_id'))
+    user_id = data.get('user_id')
+    role = data.get('role', 'customer')
+    join_room(trip_id)
+    print(f"[SOCKET] {role.capitalize()} {user_id} gia nhập phòng chuyến đi: {trip_id}")
+
+@socketio.on('customer_call_driver')
+def handle_customer_call(data):
+    trip_id = str(data.get('trip_id'))
+    print(f"[SOCKET] Khách hàng yêu cầu cuộc gọi trong phòng: {trip_id}")
+    emit('incoming_call_alert', {
+        'trip_id': trip_id,
+        'message': 'Cuộc gọi đến từ khách hàng...'
+    }, to=trip_id, include_self=False)
+
+@socketio.on('driver_respond_call')
+def handle_driver_call_respond(data):
+    trip_id = str(data.get('trip_id'))
+    action = data.get('action')
+    print(f"[SOCKET] Tài xế phản hồi cuộc gọi trong phòng {trip_id}: {action}")
+    emit('call_status_changed', {
+        'action': action
+    }, to=trip_id, include_self=False)
+
+@socketio.on('customer_cancel_call')
+def handle_customer_cancel_call(data):
+    trip_id = str(data.get('trip_id'))
+    print(f"[SOCKET] Khách hàng hủy cuộc gọi trong phòng: {trip_id}")
+    emit('call_status_changed', {
+        'action': 'cancel'
+    }, to=trip_id, include_self=False)

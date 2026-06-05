@@ -159,6 +159,12 @@
     background-color: #e5e5e5;
 }
 
+.app-container--tracking {
+    padding-bottom: 0 !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
 .trip-status-banner {
     position: absolute;
     top: 20px;
@@ -169,7 +175,7 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     text-align: center;
-    z-index: 10;
+    z-index: 20001;
 }
 
 .driver-info-card {
@@ -180,7 +186,7 @@
     padding: 24px 16px;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
-    z-index: 10;
+    z-index: 20001;
 }
 
 .driver-profile {
@@ -385,4 +391,41 @@
         border-left: 1px solid var(--color-border);
         border-right: 1px solid var(--color-border);
     }
+}
+
+/* Autocomplete suggestions styling */
+.autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: none;
+    z-index: 20000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.autocomplete-suggestion-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-main);
+    background-color: #ffffff;
+    text-align: left;
+}
+
+.autocomplete-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-suggestion-item:hover {
+    background-color: var(--secondary-color);
 }

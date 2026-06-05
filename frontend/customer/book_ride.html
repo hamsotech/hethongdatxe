@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đặt xe</title>
-    <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/customer.css">
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/customer.css?v=1.1">
 </head>
 <body>
     <div class="app-container">
@@ -17,23 +17,29 @@
         </header>
 
         <main class="main-content main-content--booking">
-            <section class="map-section map-section--small">
+            <section class="map-section map-section--small" id="booking-map-section">
                 <div id="booking-map" class="map-container"></div>
             </section>
 
             <section class="booking-form">
                 <div class="location-inputs">
-                    <div class="input-group">
-                        <span class="input-group__icon">🟢</span>
-                        <input type="text" id="pickup-location" class="input-group__field" placeholder="Điểm đón..." required>
+                    <div style="position: relative; margin-bottom: 12px;">
+                        <div class="input-group">
+                            <span class="input-group__icon">🟢</span>
+                            <input type="text" id="pickup-location" class="input-group__field" placeholder="Điểm đón..." autocomplete="off" required>
+                        </div>
+                        <div id="pickup-suggestions" class="autocomplete-suggestions"></div>
                     </div>
-                    <div class="input-group">
-                        <span class="input-group__icon">📍</span>
-                        <input type="text" id="dropoff-location" class="input-group__field" placeholder="Điểm đến..." required>
+                    <div style="position: relative; margin-bottom: 12px;">
+                        <div class="input-group">
+                            <span class="input-group__icon">📍</span>
+                            <input type="text" id="dropoff-location" class="input-group__field" placeholder="Điểm đến..." autocomplete="off" required>
+                        </div>
+                        <div id="dropoff-suggestions" class="autocomplete-suggestions"></div>
                     </div>
                 </div>
 
-                <div class="vehicle-selection">
+                <div class="vehicle-selection" id="vehicle-selection-section">
                     <h3 class="vehicle-selection__title">Chọn loại xe</h3>
                     <div class="vehicle-list">
                         <label class="vehicle-card" for="vehicle-bike">
@@ -41,7 +47,7 @@
                             <div class="vehicle-card__content">
                                 <span class="vehicle-card__icon">🏍️</span>
                                 <div class="vehicle-card__info">
-                                    <span class="vehicle-card__name">Xe máy</span>
+                                    <span class="vehicle-card__name">GrabBike • 1 khách</span>
                                     <span class="vehicle-card__time">5 phút</span>
                                 </div>
                                 <span class="vehicle-card__price" id="price-bike">...</span>
@@ -52,24 +58,62 @@
                             <div class="vehicle-card__content">
                                 <span class="vehicle-card__icon">🚗</span>
                                 <div class="vehicle-card__info">
-                                    <span class="vehicle-card__name">Ô tô 4 chỗ</span>
+                                    <span class="vehicle-card__name">GrabCar • 4 khách</span>
                                     <span class="vehicle-card__time">7 phút</span>
                                 </div>
                                 <span class="vehicle-card__price" id="price-car">...</span>
                             </div>
                         </label>
                     </div>
+
+                    <!-- Quãng đường di chuyển thực tế -->
+                    <div id="distance-info-box" style="margin-top: 16px; padding: 12px; border: 1px dashed var(--primary-color); border-radius: var(--radius-md); background: rgba(0, 177, 79, 0.02); display: flex; align-items: center; justify-content: space-between; font-size: 0.95rem;">
+                        <span style="color: var(--text-muted); font-weight: 500;">🚗 Lộ trình đường bộ:</span>
+                        <strong id="route-distance-text" style="color: var(--primary-color);">Đang tính...</strong>
+                    </div>
+
+                    <!-- Chọn Phương thức thanh toán -->
+                    <div class="payment-selection" style="margin-top: 16px;">
+                        <h3 class="vehicle-selection__title" style="margin-bottom: 8px;">Phương thức thanh toán</h3>
+                        <div class="input-group" style="border: 1px solid var(--border-color); padding: 8px 12px; border-radius: var(--radius-md); background: #fafafa;">
+                            <span class="input-group__icon" id="payment-icon" style="font-size: 1.25rem;">💵</span>
+                            <select id="payment-method-select" class="input-group__field" style="background: transparent; border: none; font-weight: 600; cursor: pointer; color: var(--text-main); margin-left: 8px; font-family: inherit; outline: none; width: 100%;">
+                                <option value="Tiền mặt">Tiền mặt</option>
+                                <option value="Thẻ tín dụng">Thẻ tín dụng</option>
+                                <option value="Ví điện tử">Ví điện tử</option>
+                                <option value="Ví MoMo">Ví MoMo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Nhập Mã khuyến mãi -->
+                    <div class="promo-selection" style="margin-top: 16px;">
+                        <h3 class="vehicle-selection__title" style="margin-bottom: 8px;">Ưu đãi / Mã khuyến mãi</h3>
+                        <div style="display: flex; gap: 8px;">
+                            <div class="input-group" style="border: 1px solid var(--border-color); padding: 8px 12px; border-radius: var(--radius-md); background: #fafafa; flex: 1; display: flex; align-items: center;">
+                                <span class="input-group__icon" style="font-size: 1.25rem;">🏷️</span>
+                                <input type="text" id="promo-code-input" class="input-group__field" placeholder="Nhập mã (ví dụ: RIDEBLUE)..." style="background: transparent; border: none; font-weight: 600; outline: none; margin-left: 8px; width: 100%; text-transform: uppercase;">
+                            </div>
+                            <button type="button" class="btn btn--outline" id="btn-apply-promo" style="padding: 0 16px; font-weight: bold; border-color: var(--primary-color); color: var(--primary-color); border-radius: var(--radius-md); cursor: pointer; background: transparent; transition: all 0.2s;">
+                                Áp dụng
+                            </button>
+                        </div>
+                        <p id="promo-message" style="font-size: 0.82rem; margin-top: 6px; display: none; font-weight: 600;"></p>
+                    </div>
                 </div>
 
-                <button class="btn btn--primary btn--full-width" id="btn-confirm-booking">
+                <button class="btn btn--primary btn--full-width" id="btn-show-map-vehicles" style="display: none; margin-top: 12px;">
+                    Tiếp tục (Chọn xe & Bản đồ)
+                </button>
+                <button class="btn btn--primary btn--full-width" id="btn-confirm-booking" style="margin-top: 12px;">
                     Xác nhận đặt xe
                 </button>
             </section>
         </main>
     </div>
 
-    <script src="/js/api.js" defer></script>
-    <script src="/js/map.js" defer></script>
-    <script src="/js/customer/booking.js" defer></script>
+    <script src="/js/api.js?v=1.2" defer></script>
+    <script src="/js/map.js?v=1.2" defer></script>
+    <script src="/js/customer/booking.js?v=1.2" defer></script>
 </body>
 </html>

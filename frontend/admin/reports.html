@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Báo cáo</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/admin.css?v=1.1">
 </head>
 <body>
     <div class="admin-layout" id="admin-reports">
         <aside class="sidebar">
             <div class="sidebar__logo">RideConnect Admin</div>
-            <nav class="sidebar__menu">
-                <a href="dashboard.html" class="sidebar__link">Tổng quan</a>
-                <a href="users.html" class="sidebar__link">Khách hàng</a>
-                <a href="drivers.html" class="sidebar__link">Tài xế</a>
-                <a href="trips.html" class="sidebar__link">Chuyến xe</a>
-                <a href="reports.html" class="sidebar__link sidebar__link--active">Báo cáo</a>
+            <nav class="sidebar__menu" style="display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <a href="/admin/dashboard.html" class="sidebar__link">Tổng quan</a>
+                <a href="/admin/users.html" class="sidebar__link">Khách hàng</a>
+                <a href="/admin/drivers.html" class="sidebar__link">Tài xế</a>
+                <a href="/admin/trips.html" class="sidebar__link">Chuyến xe</a>
+                <a href="/admin/reports.html" class="sidebar__link sidebar__link--active">Báo cáo</a>
+                <a href="#" id="btn-logout" class="sidebar__link" style="color: var(--color-red); margin-top: auto;">Đăng xuất</a>
             </nav>
         </aside>
         <main class="content-area">
@@ -27,11 +28,11 @@
                 <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 200px;">
                         <label style="display: block; margin-bottom: 0.5rem; color: var(--color-text-muted); font-weight: 500;">Từ ngày</label>
-                        <input type="date" class="input-control" style="width: 100%;">
+                        <input type="date" id="report-from-date" class="input-control" style="width: 100%;">
                     </div>
                     <div style="flex: 1; min-width: 200px;">
                         <label style="display: block; margin-bottom: 0.5rem; color: var(--color-text-muted); font-weight: 500;">Đến ngày</label>
-                        <input type="date" class="input-control" style="width: 100%;">
+                        <input type="date" id="report-to-date" class="input-control" style="width: 100%;">
                     </div>
                      <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
                         <button class="btn btn--primary" id="btn-export-excel">Tải Excel</button>
@@ -53,18 +54,9 @@
                                     <th>Thu nhập của tài xế</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="revenue-list">
                                 <tr>
-                                    <td>Tháng 05/2026</td>
-                                    <td>1.250.000.000đ</td>
-                                    <td style="color: var(--color-blue); font-weight: bold;">250.000.000đ</td>
-                                    <td>1.000.000.000đ</td>
-                                </tr>
-                                <tr>
-                                    <td>Tháng 04/2026</td>
-                                    <td>1.100.000.000đ</td>
-                                    <td style="color: var(--color-blue); font-weight: bold;">220.000.000đ</td>
-                                    <td>880.000.000đ</td>
+                                    <td colspan="4" style="text-align: center;">Đang tải báo cáo doanh thu...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -84,20 +76,9 @@
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="complaint-list">
                         <tr>
-                            <td>REP-001</td>
-                            <td>Khách: Nguyễn Văn A</td>
-                            <td>Tài xế đi sai tuyến đường, thu thêm tiền.</td>
-                            <td><span class="badge badge--warning">Chờ xử lý</span></td>
-                            <td><button class="btn btn--primary" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Xử lý</button></td>
-                        </tr>
-                        <tr>
-                            <td>REP-002</td>
-                            <td>Tài xế: Lê Văn B</td>
-                            <td>Khách đặt xe nhưng không ra, không bắt máy.</td>
-                            <td><span class="badge badge--success">Đã giải quyết</span></td>
-                            <td><button class="action-btn action-btn--view">Xem</button></td>
+                            <td colspan="5" style="text-align: center;">Đang tải danh sách khiếu nại...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -105,5 +86,8 @@
 
         </main>
     </div>
+    <script src="/js/api.js?v=1.2" defer></script>
+    <script src="/js/logout.js?v=1.2" defer></script>
+    <script src="/js/admin/reports.js?v=1.2" defer></script>
 </body>
 </html>

@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Chuyến xe</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/admin.css?v=1.1">
 </head>
 <body>
     <div class="admin-layout" id="admin-trips">
         <aside class="sidebar">
             <div class="sidebar__logo">RideConnect Admin</div>
-            <nav class="sidebar__menu">
-                <a href="dashboard.html" class="sidebar__link">Tổng quan</a>
-                <a href="users.html" class="sidebar__link">Khách hàng</a>
-                <a href="drivers.html" class="sidebar__link">Tài xế</a>
-                <a href="trips.html" class="sidebar__link sidebar__link--active">Chuyến xe</a>
-                <a href="reports.html" class="sidebar__link">Báo cáo</a>
+            <nav class="sidebar__menu" style="display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <a href="/admin/dashboard.html" class="sidebar__link">Tổng quan</a>
+                <a href="/admin/users.html" class="sidebar__link">Khách hàng</a>
+                <a href="/admin/drivers.html" class="sidebar__link">Tài xế</a>
+                <a href="/admin/trips.html" class="sidebar__link sidebar__link--active">Chuyến xe</a>
+                <a href="/admin/reports.html" class="sidebar__link">Báo cáo</a>
+                <a href="#" id="btn-logout" class="sidebar__link" style="color: var(--color-red); margin-top: auto;">Đăng xuất</a>
             </nav>
         </aside>
         <main class="content-area">
@@ -84,5 +85,8 @@
             </div>
         </main>
     </div>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/logout.js" defer></script>
+    <script src="/js/admin/trips.js" defer></script>
 </body>
 </html>

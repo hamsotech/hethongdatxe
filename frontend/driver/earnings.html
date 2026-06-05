@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài xế - Thu nhập</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/driver.css?v=1.1">
+</head>
+<body>
+    <div class="mobile-container" id="driver-earnings">
+        <header class="header">
+            <h1 style="font-size: 1.25rem;">Thu nhập của bạn</h1>
+        </header>
+
+        <div class="content-section" style="text-align: center; padding: 2rem 1rem;">
+            <p style="color: var(--color-text-muted); margin-bottom: 0.5rem;">Số dư hiện tại</p>
+            <h2 style="font-size: 2.5rem; color: var(--color-blue); margin-bottom: 1.5rem;">2.450.000 ₫</h2>
+            <button class="btn btn--primary" id="btn-withdraw" style="width: 100%; padding: 1rem;">Yêu cầu rút tiền</button>
+        </div>
+
+        <div class="content-section">
+            <h3 style="margin-bottom: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">Thống kê tuần này</h3>
+            <div class="css-chart" id="earnings-chart">
+                <!-- CSS Based Bar Chart -->
+                <div class="css-chart__bar" style="height: 30%;"><span class="css-chart__label">T2</span></div>
+                <div class="css-chart__bar" style="height: 50%;"><span class="css-chart__label">T3</span></div>
+                <div class="css-chart__bar" style="height: 80%; background-color: var(--color-green);"><span class="css-chart__label">T4</span></div>
+                <div class="css-chart__bar" style="height: 40%;"><span class="css-chart__label">T5</span></div>
+                <div class="css-chart__bar" style="height: 90%;"><span class="css-chart__label">T6</span></div>
+                <div class="css-chart__bar" style="height: 60%;"><span class="css-chart__label">T7</span></div>
+                <div class="css-chart__bar" style="height: 10%;"><span class="css-chart__label">CN</span></div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                <span style="color: var(--color-text-muted);">Tổng tuần:</span>
+                <strong style="font-size: 1.25rem;">1.430.000 ₫</strong>
+            </div>
+        </div>
+
+        <!-- Modal Rút tiền OTP -->
+        <div id="withdraw-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+            <div style="background:#fff; border-radius:16px; width:100%; max-width:380px; padding:2rem; box-shadow:0 12px 30px rgba(0,0,0,0.25); text-align:center;">
+                <h3 style="margin-bottom:0.5rem; font-size:1.4rem; color:var(--color-blue); font-weight:700;">Rút tiền về tài khoản</h3>
+                <p id="withdraw-subtitle" style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1.5rem;">Nhập số tiền và mã OTP được gửi tới email của bạn:</p>
+                <form id="withdraw-form" style="display:flex; flex-direction:column; gap:12px;">
+                    <input type="number" id="withdraw-amount" class="input-control" placeholder="Nhập số tiền cần rút (đ)" required style="padding:0.75rem; border:1px solid var(--color-border); border-radius:8px; width:100%; box-sizing:border-box;">
+                    
+                    <div id="withdraw-otp-group" style="display:none; flex-direction:column; gap:12px;">
+                        <input type="text" id="withdraw-otp" class="input-control" placeholder="Mã OTP 6 số" maxlength="6" style="padding:0.75rem; border:1px solid var(--color-border); border-radius:8px; width:100%; box-sizing:border-box; text-align:center;">
+                    </div>
+
+                    <button type="submit" id="btn-withdraw-submit" class="btn btn--primary" style="width:100%; padding:0.75rem; font-size:1rem; font-weight:600;">Yêu cầu mã OTP</button>
+                    <button type="button" id="btn-close-withdraw" class="btn btn--secondary" style="width:100%; padding:0.75rem; font-size:1rem;">Hủy</button>
+                </form>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/driver/dashboard.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">🏠</span>
+                <span class="bottom-nav__text">Trang chủ</span>
+            </a>
+            <a href="/driver/trips.html"     class="bottom-nav__item">
+                <span class="bottom-nav__icon">📜</span>
+                <span class="bottom-nav__text">Chuyến xe</span>
+            </a>
+            <a href="/driver/earnings.html"  class="bottom-nav__item bottom-nav__item--active">
+                <span class="bottom-nav__icon">💵</span>
+                <span class="bottom-nav__text">Thu nhập</span>
+            </a>
+            <a href="/driver/profile.html"   class="bottom-nav__item">
+                <span class="bottom-nav__icon">👤</span>
+                <span class="bottom-nav__text">Cá nhân</span>
+            </a>
+        </nav>
+    </div>
+    <script src="/js/driver/earnings.js"></script>
+</body>
+</html>
