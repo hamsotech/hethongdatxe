@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Báo cáo</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/admin.css?v=1.1">
+</head>
+<body>
+    <div class="admin-layout" id="admin-reports">
+        <aside class="sidebar">
+            <div class="sidebar__logo">RideConnect Admin</div>
+            <nav class="sidebar__menu" style="display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <a href="/admin/dashboard.html" class="sidebar__link">Tổng quan</a>
+                <a href="/admin/users.html" class="sidebar__link">Khách hàng</a>
+                <a href="/admin/drivers.html" class="sidebar__link">Tài xế</a>
+                <a href="/admin/trips.html" class="sidebar__link">Chuyến xe</a>
+                <a href="/admin/reports.html" class="sidebar__link sidebar__link--active">Báo cáo</a>
+                <a href="#" id="btn-logout" class="sidebar__link" style="color: var(--color-red); margin-top: auto;">Đăng xuất</a>
+            </nav>
+        </aside>
+        <main class="content-area">
+            <h1 class="page-title">Báo cáo doanh thu & Sự cố</h1>
+            
+            <div style="background: var(--color-white); padding: 1.5rem; border-radius: 0.75rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--color-text-main);">Biểu mẫu xuất báo cáo</h3>
+                <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--color-text-muted); font-weight: 500;">Từ ngày</label>
+                        <input type="date" id="report-from-date" class="input-control" style="width: 100%;">
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--color-text-muted); font-weight: 500;">Đến ngày</label>
+                        <input type="date" id="report-to-date" class="input-control" style="width: 100%;">
+                    </div>
+                     <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
+                        <button class="btn btn--primary" id="btn-export-excel">Tải Excel</button>
+                        <button class="btn btn--primary" id="btn-export-pdf" style="background: var(--color-red);">Tải PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid" style="grid-template-columns: 1fr;">
+                <div class="chart-card">
+                    <h3 class="chart-card__title">Thống kê doanh thu chia sẻ (Hệ thống)</h3>
+                    <div class="table-responsive" style="box-shadow: none;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Tháng</th>
+                                    <th>Tổng giá trị chuyến đi</th>
+                                    <th>% Chiết khấu nhận về</th>
+                                    <th>Thu nhập của tài xế</th>
+                                </tr>
+                            </thead>
+                            <tbody id="revenue-list">
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">Đang tải báo cáo doanh thu...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; color: var(--color-text-main); margin-top: 1rem;">Báo cáo vi phạm / Khiếu nại</h3>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mã Khiếu Nại</th>
+                            <th>Nguồn</th>
+                            <th>Nội dung</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaint-list">
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Đang tải danh sách khiếu nại...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+    <script src="/js/api.js?v=1.2" defer></script>
+    <script src="/js/logout.js?v=1.2" defer></script>
+    <script src="/js/admin/reports.js?v=1.2" defer></script>
+</body>
+</html>

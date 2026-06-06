@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.activeDiscount = 0.0;
 
     // Kiểm tra xem khách hàng có bị khóa ứng dụng hay không
-    const customerId = localStorage.getItem('user_id');
+    const customerId = sessionStorage.getItem('user_id');
     const isCustomerLocked = localStorage.getItem(`user_locked_${customerId}`) === 'true';
     if (isCustomerLocked) {
         const reason = localStorage.getItem(`user_lock_reason_${customerId}`) || 'Vi phạm điều khoản sử dụng';
         alert(`Tài khoản của bạn hiện đã bị khóa bởi quản trị viên.\nLý do: ${reason}\n\nVui lòng liên hệ với hỗ trợ (admin@rideconnect.vn) để được giải quyết.`);
-        localStorage.clear();
+        sessionStorage.clear();
         sessionStorage.clear();
         window.location.replace('/login.html');
         return;
@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const userNameEl = document.getElementById('user-name');
     if (userNameEl) {
-        userNameEl.textContent = localStorage.getItem('user_name') || 'Khách hàng';
+        userNameEl.textContent = sessionStorage.getItem('user_name') || 'Khách hàng';
     }
-    const savedAvatar = localStorage.getItem('customer_avatar');
+    const savedAvatar = sessionStorage.getItem('customer_avatar');
     const dashboardAvatar = document.getElementById('user-avatar');
     if (savedAvatar && dashboardAvatar) {
         dashboardAvatar.src = savedAvatar;
@@ -36,18 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const btnSwitchRole = document.getElementById('btn-switch-role');
     if (btnSwitchRole) {
-        const roles = JSON.parse(localStorage.getItem('user_roles') || '[]');
+        const roles = JSON.parse(sessionStorage.getItem('user_roles') || '[]');
         if (roles.includes('driver')) {
             btnSwitchRole.style.display = 'block';
             btnSwitchRole.addEventListener('click', () => {
-                const allUsers = JSON.parse(localStorage.getItem('all_users_info') || '{}');
+                const allUsers = JSON.parse(sessionStorage.getItem('all_users_info') || '{}');
                 const driverInfo = allUsers['driver'];
                 if (driverInfo) {
-                    localStorage.setItem('currentUserRole', 'driver');
-                    localStorage.setItem('user_id', driverInfo.ma_tai_xe);
-                    localStorage.setItem('user_name', driverInfo.ten);
-                    localStorage.setItem('user_email', driverInfo.email);
-                    localStorage.setItem('user_phone', driverInfo.so_dien_thoai);
+                    sessionStorage.setItem('currentUserRole', 'driver');
+                    sessionStorage.setItem('user_id', driverInfo.ma_tai_xe);
+                    sessionStorage.setItem('user_name', driverInfo.ten);
+                    sessionStorage.setItem('user_email', driverInfo.email);
+                    sessionStorage.setItem('user_phone', driverInfo.so_dien_thoai);
                     window.location.href = '/driver/dashboard.html';
                 }
             });
@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let notifications = [
         { id: 1, text: "🎉 Khuyến mãi: Nhập RIDEBLUE giảm ngay 20% cho chuyến đi đầu tiên.", unread: true },
-        { id: 2, text: "🚗 Chuyến đi TRP-9812 của bạn đã hoàn thành xuất sắc.", unread: true },
         { id: 3, text: "⚠️ Tài khoản của bạn đã được xác minh thành công.", unread: false }
     ];
 
@@ -90,7 +89,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    renderNotifications();
+    async function loadDynamicNotifications() {
+        try {
+            const response = await API.get('/customer/history');
+            const trips = Array.isArray(response) ? response : (response.data || []);
+            const completedTrip = trips.find(t => t.TRANG_THAI === 'HOAN_THANH');
+            if (completedTrip) {
+                // Thêm thông báo chuyến đi hoàn thành gần nhất vào vị trí thứ 2
+                notifications.splice(1, 0, {
+                    id: 2,
+                    text: `🚗 Chuyến đi TRP-${completedTrip.MA_CHUYEN_DI} của bạn đã hoàn thành xuất sắc.`,
+                    unread: true
+                });
+            }
+        } catch (error) {
+            console.error('Lỗi khi tải thông báo chuyến đi hoàn thành:', error);
+        } finally {
+            renderNotifications();
+        }
+    }
+
+    loadDynamicNotifications();
 
     if (btnNotifications && notificationDropdown) {
         btnNotifications.addEventListener('click', (e) => {
@@ -412,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const paymentMethod = paymentSelect ? paymentSelect.value : 'Tiền mặt';
                 const payload = {
-                    ma_nguoi_dung: parseInt(localStorage.getItem('user_id')) || 1,
+                    ma_nguoi_dung: parseInt(sessionStorage.getItem('user_id')) || 1,
                     diem_don: pickup,
                     diem_den: dropoff,
                     gia_tien: estimatePrice(pickup, dropoff),

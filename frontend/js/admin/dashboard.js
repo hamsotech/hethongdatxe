@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('access_token');
+    const token = sessionStorage.getItem('access_token');
     if (!token) { window.location.replace('/login.html'); return; }
 
     // Vẽ biểu đồ xu hướng (Trend Chart)
@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data.total_drivers !== undefined) {
             const elDrivers = document.getElementById('kpi-drivers');
             if (elDrivers) elDrivers.textContent = data.total_drivers.toLocaleString('vi-VN');
+        }
+        if (data.total_revenue !== undefined) {
+            const elRevenue = document.getElementById('kpi-revenue');
+            if (elRevenue) elRevenue.textContent = `${parseInt(data.total_revenue).toLocaleString('vi-VN')}đ`;
         }
     } catch (error) {
         console.warn('[Admin Dashboard] Không tải được dữ liệu từ backend:', error);

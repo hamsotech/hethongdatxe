@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Helper: Gọi Nominatim có lưu cache vào localStorage để giảm lag & chống rate-limit
+    // Helper: Gọi Nominatim có lưu cache vào sessionStorage để giảm lag & chống rate-limit
     window.cachedFetch = async function(url, options = {}) {
         if (url.includes('nominatim.openstreetmap.org')) {
             const cacheKey = 'geo_cache_' + url;
-            const cached = localStorage.getItem(cacheKey);
+            const cached = sessionStorage.getItem(cacheKey);
             if (cached) {
                 return {
                     json: async () => JSON.parse(cached),
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch(url, options);
                 if (response.ok) {
                     const text = await response.text();
-                    localStorage.setItem(cacheKey, text);
+                    sessionStorage.setItem(cacheKey, text);
                     return {
                         json: async () => JSON.parse(text),
                         ok: true,

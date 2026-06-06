@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theo dõi chuyến đi</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/customer.css?v=1.1">
+</head>
+<body>
+    <div class="app-container app-container--tracking">
+        <div id="tracking-map" class="map-fullscreen"></div>
+
+        <div class="trip-status-banner">
+            <h2 class="trip-status-banner__text" id="trip-status-text">Đang tìm tài xế...</h2>
+        </div>
+
+        <!-- Thẻ tìm tài xế & Huỷ chuyến cho khách hàng -->
+        <section class="driver-info-card" id="searching-card" style="display: block;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div class="searching-spinner" style="margin: 0 auto 15px auto; width: 45px; height: 45px; border: 4px solid rgba(59, 130, 246, 0.1); border-top: 4px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <h3 style="font-size: 1.15rem; color: var(--color-text-main); font-weight: 600;">Đang tìm tài xế gần nhất...</h3>
+                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 5px;">Hệ thống đang điều phối xe tối ưu cho bạn</p>
+            </div>
+            <div class="tracking-actions">
+                <button class="btn btn--danger" id="btn-cancel-searching" style="width: 100%; font-weight: 600; padding: 0.75rem;">❌ Hủy chuyến</button>
+            </div>
+        </section>
+
+        <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        </style>
+
+        <section class="driver-info-card" id="driver-info-card" style="display: none;">
+            <div class="driver-profile">
+                <img src="/assets/images/driver-default.png" alt="Tài xế" class="driver-profile__avatar" id="driver-avatar">
+                <div class="driver-profile__details">
+                    <h3 class="driver-profile__name" id="driver-name">Nguyễn Văn A</h3>
+                    <div class="driver-profile__rating">
+                        <span class="icon">⭐</span>
+                        <span id="driver-rating">4.9</span>
+                    </div>
+                </div>
+                <div class="driver-profile__vehicle">
+                    <span class="vehicle-plate" id="vehicle-plate">59-A1 12345</span>
+                    <span class="vehicle-desc" id="vehicle-desc">Honda Vision - Trắng</span>
+                </div>
+            </div>
+            
+            <!-- Thông tin thanh toán chuyến đi -->
+            <div class="payment-info-bar" style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 8px 12px; background: #fafafa; border-radius: var(--radius-md); border: 1px solid var(--border-color); font-size: 0.95rem;">
+                <span id="tracking-payment-icon">💵</span>
+                <span style="color: var(--text-muted);">Thanh toán:</span>
+                <strong id="tracking-payment-method" style="color: var(--text-main);">Tiền mặt</strong>
+                <span style="margin-left: auto; font-weight: bold; color: var(--primary-color);" id="tracking-trip-price">...</span>
+            </div>
+            
+            <div class="tracking-actions">
+                <button class="btn btn--icon btn--success" id="btn-call-driver">📞 Gọi điện</button>
+                <button class="btn btn--icon btn--danger" id="btn-cancel-trip">❌ Hủy chuyến</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal Cuộc gọi đi (Calling Modal) -->
+    <div id="outgoing-call-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:30000; align-items:center; justify-content:center; padding:1rem; color: #333;">
+        <div style="background:#fff; border-radius:24px; width:100%; max-width:320px; padding:2rem; box-shadow:0 12px 30px rgba(0,0,0,0.3); text-align:center;">
+            <div style="font-size:3.5rem; margin-bottom:1rem; animation: call-shake 0.5s infinite alternate; display: inline-block;">📞</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.3rem; color:var(--primary-color); font-weight:700;">Đang gọi cho Tài xế</h3>
+            <p id="outgoing-call-status" style="font-size:0.95rem; color:var(--text-muted); margin-bottom:2rem;">Đang kết nối...</p>
+            
+            <button class="btn btn--danger" id="btn-cancel-call" style="border-radius:50%; width:60px; height:60px; padding:0; font-size:1.5rem; display:inline-flex; align-items:center; justify-content:center;" title="Huỷ cuộc gọi">❌</button>
+        </div>
+    </div>
+
+    <style>
+    @keyframes call-shake {
+        0% { transform: rotate(-12deg); }
+        100% { transform: rotate(12deg); }
+    }
+    </style>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/map.js" defer></script>
+    <script src="/js/socket.js" defer></script>
+    <script src="/js/customer/tracking.js" defer></script>
+</body>
+</html>

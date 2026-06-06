@@ -186,6 +186,18 @@ def register_driver():
     if not loai_xe or not bien_so:
         return jsonify({"success": False, "message": "Thiếu thông tin loại xe hoặc biển số"}), 400
         
+    # Kiểm tra tính hợp lệ của biển số xe Việt Nam
+    import re
+    clean_plate = re.sub(r'[-. ]', '', bien_so).upper()
+    car_pattern = r'^([1-9][0-9])([A-Z]|LD|DA|MK|MĐ|TĐ|HC)([0-9]{4,5})$'
+    bike_pattern = r'^([1-9][0-9])([A-Z][0-9A-Z])([0-9]{4,5})$'
+    
+    if not re.match(car_pattern, clean_plate) and not re.match(bike_pattern, clean_plate):
+        return jsonify({
+            "success": False, 
+            "message": "Biển số xe không đúng định dạng hợp lệ của Việt Nam (Ví dụ: 30A-123.45 hoặc 29-K1-999.99)"
+        }), 400
+        
     conn = get_connection()
     if not conn:
         return jsonify({"success": False, "message": "Lỗi kết nối database"}), 500
@@ -210,8 +222,28 @@ def register_driver():
         )
         existing_driver = cursor.fetchone()
         if existing_driver:
-            conn.close()
-            return jsonify({"success": False, "message": "Tài khoản của bạn đã được đăng ký làm tài xế trước đó"}), 400
+            # Kiểm tra trạng thái hồ sơ của tài xế này
+            cursor.execute(
+                "SELECT TRANG_THAI FROM HO_SO_TAI_XE WHERE MA_TAI_XE = %s",
+                (existing_driver["MA_TAI_XE"],)
+            )
+            profile = cursor.fetchone()
+            if profile and profile["TRANG_THAI"] == "Từ chối":
+                # Cho phép cập nhật lại phương tiện và gửi lại hồ sơ chờ duyệt
+                cursor.execute(
+                    "UPDATE PHUONG_TIEN SET LOAI_XE = %s, BIEN_SO = %s WHERE MA_TAI_XE = %s",
+                    (loai_xe, bien_so, existing_driver["MA_TAI_XE"])
+                )
+                cursor.execute(
+                    "UPDATE HO_SO_TAI_XE SET TRANG_THAI = 'Chờ duyệt' WHERE MA_TAI_XE = %s",
+                    (existing_driver["MA_TAI_XE"],)
+                )
+                conn.commit()
+                conn.close()
+                return jsonify({"success": True, "message": "Hồ sơ tài xế của bạn đã được cập nhật và gửi lại để chờ phê duyệt."})
+            else:
+                conn.close()
+                return jsonify({"success": False, "message": "Tài khoản của bạn đã được đăng ký làm tài xế trước đó"}), 400
             
         # 3. Chèn vào bảng TAI_XE (sao chép tên, sđt, email, mật khẩu)
         cursor.execute(

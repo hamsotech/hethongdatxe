@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ==========================================
     async function loadUserProfile() {
         try {
-            // Lấy thông tin thực tế từ localStorage sau khi đăng nhập thành công
-            const userName = localStorage.getItem('user_name') || 'Khách hàng';
-            const userPhone = localStorage.getItem('user_phone') || '';
-            const userEmail = localStorage.getItem('user_email') || '';
+            // Lấy thông tin thực tế từ sessionStorage sau khi đăng nhập thành công
+            const userName = sessionStorage.getItem('user_name') || 'Khách hàng';
+            const userPhone = sessionStorage.getItem('user_phone') || '';
+            const userEmail = sessionStorage.getItem('user_email') || '';
 
             // Đổ dữ liệu vào các ô input
             inputName.value = userName;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             inputEmail.value = userEmail;
 
             // ĐOẠN MÃ KIỂM TRA VÀ NẠP AVATAR TỪ LOCALSTORAGE
-            const savedAvatar = localStorage.getItem('customer_avatar');
+            const savedAvatar = sessionStorage.getItem('customer_avatar');
             if (savedAvatar && avatarImg) {
                 avatarImg.src = savedAvatar;
             }
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
-                // Giới hạn dung lượng ảnh nhỏ hơn 2MB để lưu vào localStorage không bị tràn
+                // Giới hạn dung lượng ảnh nhỏ hơn 2MB để lưu vào sessionStorage không bị tràn
                 if (file.size > 2 * 1024 * 1024) {
                     alert('Kích thước ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB.');
                     return;
@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Thay đổi hiển thị ảnh trên trang cá nhân ngay lập tức
                     avatarImg.src = base64Image;
                     
-                    // Lưu vào localStorage để đồng bộ với trang Dashboard
-                    localStorage.setItem('customer_avatar', base64Image);
+                    // Lưu vào sessionStorage để đồng bộ với trang Dashboard
+                    sessionStorage.setItem('customer_avatar', base64Image);
                     
                     alert('Đã cập nhật ảnh đại diện thành công!');
                 };
@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const newPhone = inputPhone.value.trim();
             const newEmail = inputEmail.value.trim();
 
-            const oldPhone = localStorage.getItem('user_phone') || '';
-            const oldEmail = localStorage.getItem('user_email') || '';
+            const oldPhone = sessionStorage.getItem('user_phone') || '';
+            const oldEmail = sessionStorage.getItem('user_email') || '';
 
             const isSensitiveChanged = (newPhone !== oldPhone || newEmail !== oldEmail);
 
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             btnSave.textContent = 'Đang xử lý...';
             btnSave.disabled = true;
 
-            const token = localStorage.getItem('access_token');
+            const token = sessionStorage.getItem('access_token');
 
             async function saveProfileData(otpCode = null) {
                 try {
@@ -178,10 +178,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                             input.style.backgroundColor = '';
                         });
 
-                        // Cập nhật lại localStorage
-                        localStorage.setItem('user_name', newName);
-                        localStorage.setItem('user_phone', newPhone);
-                        localStorage.setItem('user_email', newEmail);
+                        // Cập nhật lại sessionStorage
+                        sessionStorage.setItem('user_name', newName);
+                        sessionStorage.setItem('user_phone', newPhone);
+                        sessionStorage.setItem('user_email', newEmail);
 
                         // Cập nhật tên hiển thị ở header nếu có
                         const userNameEl = document.getElementById('user-name');
@@ -291,8 +291,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const carType = document.getElementById('driver-car-type').value;
             const licensePlate = document.getElementById('driver-license-plate').value.trim();
-            const submitBtn = document.getElementById('btn-submit-driver-reg');
+            
+            // Validate biển số xe Việt Nam ở Frontend
+            const cleanPlate = licensePlate.replace(/[-. ]/g, "").toUpperCase();
+            const carRegex = /^([1-9][0-9])([A-Z]|LD|DA|MK|MĐ|TĐ|HC)([0-9]{4,5})$/;
+            const bikeRegex = /^([1-9][0-9])([A-Z][0-9A-Z])([0-9]{4,5})$/;
+            
+            if (!carRegex.test(cleanPlate) && !bikeRegex.test(cleanPlate)) {
+                alert('Biển số xe không hợp lệ! Vui lòng nhập đúng định dạng biển số xe Việt Nam (Ví dụ: 30A-123.45 hoặc 29-K1-999.99).');
+                return;
+            }
 
+            const submitBtn = document.getElementById('btn-submit-driver-reg');
             submitBtn.textContent = 'Đang đăng ký...';
             submitBtn.disabled = true;
 
@@ -301,7 +311,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
                     },
                     body: JSON.stringify({
                         loai_xe: carType,
@@ -312,7 +322,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const data = await response.json();
 
                 if (data.success) {
-                    alert('Đăng ký tài xế thành công! Bạn có thể đăng xuất và đăng nhập lại bằng vai trò Tài xế.');
+                    alert(data.message || 'Đăng ký tài xế thành công!');
                     document.getElementById('driver-reg-section').style.display = 'none';
                 } else {
                     alert(data.message || 'Đăng ký tài xế thất bại. Vui lòng thử lại.');

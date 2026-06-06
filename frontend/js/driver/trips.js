@@ -4,8 +4,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('access_token');
-    const driverId = localStorage.getItem('user_id');
+    const token = sessionStorage.getItem('access_token');
+    const driverId = sessionStorage.getItem('user_id');
     if (!token) { window.location.replace('/login.html'); return; }
 
     const API_BASE_URL = `${window.location.origin}/api/driver`;

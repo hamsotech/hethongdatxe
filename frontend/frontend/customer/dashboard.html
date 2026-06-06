@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Đặt xe</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/customer.css?v=1.1">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header__user-info">
+                <div class="header__avatar">
+                    <img src="/assets/avatar-an-danh-1.webp" alt="User Avatar" id="user-avatar">
+                </div>
+                <div class="header__greeting">
+                    <p class="header__greeting-text">Xin chào,</p>
+                    <h2 class="header__user-name" id="user-name">Đang tải...</h2>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button id="btn-switch-role" class="btn btn--outline" style="display:none; padding: 4px 8px; font-size: 0.8rem; border-color: var(--color-blue); color: var(--color-blue);">
+                    🔄 Tài xế
+                </button>
+                <div style="position: relative;">
+                    <button class="header__notification-btn" aria-label="Thông báo" id="btn-notifications"
+                        style="border:none;background:transparent;cursor:pointer;font-size:1.25rem;">
+                        <span class="icon">🔔</span>
+                        <span class="notification-badge" id="nav-notification-badge" style="display:none;">0</span>
+                    </button>
+                    <div class="notification-dropdown" id="notification-dropdown"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Bản đồ trang chủ để khách hàng theo dõi vị trí -->
+            <section class="map-section">
+                <div id="map-container" class="map-container">
+                    <p class="map-container__placeholder">Đang tải bản đồ khu vực của bạn...</p>
+                </div>
+            </section>
+            <section class="action-board">
+                <h3 class="action-board__title">Bạn muốn đi đâu?</h3>
+                <div class="search-bar" id="search-destination-btn">
+                    <span class="search-bar__icon">📍</span>
+                    <input type="text" class="search-bar__input" placeholder="Nhập điểm đến..." readonly>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn action-btn--primary" id="btn-book-ride">
+                        <span class="action-btn__icon">🚗</span>
+                        <span class="action-btn__text">Đặt xe ngay</span>
+                    </button>
+                    <button class="action-btn action-btn--secondary" id="btn-view-history">
+                        <span class="action-btn__icon">🕒</span>
+                        <span class="action-btn__text">Lịch sử</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="/customer/dashboard.html" class="bottom-nav__item bottom-nav__item--active">
+                <span class="bottom-nav__icon">🏠</span>
+                <span class="bottom-nav__text">Trang chủ</span>
+            </a>
+            <a href="/customer/history.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">📜</span>
+                <span class="bottom-nav__text">Chuyến đi</span>
+            </a>
+            <a href="/customer/profile.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">👤</span>
+                <span class="bottom-nav__text">Tài khoản</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- FIX: Thêm Socket.IO CDN trước socket.js -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/js/api.js?v=1.2" defer></script>
+    <script src="/js/map.js?v=1.2" defer></script>
+    <script src="/js/socket.js?v=1.2" defer></script>
+    <script src="/js/customer/booking.js?v=1.3" defer></script>
+</body>
+</html>

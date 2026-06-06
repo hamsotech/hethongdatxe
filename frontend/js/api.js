@@ -6,7 +6,7 @@
 const API_BASE_URL = `${window.location.origin}/api`;
 
 const API = {
-    getToken: () => localStorage.getItem('access_token'),
+    getToken: () => sessionStorage.getItem('access_token'),
 
     getHeaders: function() {
         const headers = { 'Content-Type': 'application/json' };

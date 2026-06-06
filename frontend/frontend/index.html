@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideConnect</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <style>
+        body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+        .splash { text-align:center; }
+        .splash h1 { font-size:2.5rem; color:var(--primary-color); margin-bottom:0.5rem; }
+        .splash p  { color:var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="splash">
+        <h1>RideConnect</h1>
+        <p>Đang điều hướng...</p>
+    </div>
+    <script>
+        const role = sessionStorage.getItem('currentUserRole');
+        if (role === 'driver') window.location.replace('/driver/dashboard.html');
+        else if (role === 'admin') window.location.replace('/admin/dashboard.html');
+        else window.location.replace('/login.html');
+    </script>
+</body>
+</html>

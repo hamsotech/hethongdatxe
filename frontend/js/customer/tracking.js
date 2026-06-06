@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Kết nối Socket.IO (dùng SocketManager từ socket.js)
     if (typeof SocketManager !== 'undefined') {
-        const userId = localStorage.getItem('user_id') || 1;
+        const userId = sessionStorage.getItem('user_id') || 1;
         SocketManager.connect(userId, 'customer');
 
         // Gia nhập lại phòng của chuyến đi để nhận thông tin realtime

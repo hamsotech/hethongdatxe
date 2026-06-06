@@ -5,8 +5,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('access_token');
-    const driverId = localStorage.getItem('user_id');
+    const token = sessionStorage.getItem('access_token');
+    const driverId = sessionStorage.getItem('user_id');
     if (!token) { window.location.replace('/login.html'); return; }
 
     // Kiểm tra xem tài xế có bị khóa ứng dụng hay không
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isLocked) {
         const reason = localStorage.getItem(`driver_lock_reason_${driverId}`) || 'Vi phạm điều khoản sử dụng';
         alert(`Tài khoản tài xế của bạn hiện đã bị khóa bởi quản trị viên.\nLý do: ${reason}\n\nVui lòng liên hệ với hỗ trợ (admin@rideconnect.vn) để được mở khóa.`);
-        localStorage.clear();
+        sessionStorage.clear();
         sessionStorage.clear();
         window.location.replace('/login.html');
         return;
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hiển thị tên tài xế thực tế
     const driverGreeting = document.getElementById('driver-greeting');
     if (driverGreeting) {
-        driverGreeting.textContent = localStorage.getItem('user_name') || 'Tài xế';
+        driverGreeting.textContent = sessionStorage.getItem('user_name') || 'Tài xế';
     }
 
     const sheetRequested = document.getElementById('sheet-requested');
@@ -245,18 +245,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // LOGIC CHUYỂN ĐỔI VAI TRÒ NHANH (DUAL-ROLE)
     // ==========================================
     if (btnSwitchRole) {
-        const roles = JSON.parse(localStorage.getItem('user_roles') || '[]');
+        const roles = JSON.parse(sessionStorage.getItem('user_roles') || '[]');
         if (roles.includes('customer')) {
             btnSwitchRole.style.display = 'block';
             btnSwitchRole.addEventListener('click', () => {
-                const allUsers = JSON.parse(localStorage.getItem('all_users_info') || '{}');
+                const allUsers = JSON.parse(sessionStorage.getItem('all_users_info') || '{}');
                 const customerInfo = allUsers['customer'];
                 if (customerInfo) {
-                    localStorage.setItem('currentUserRole', 'customer');
-                    localStorage.setItem('user_id', customerInfo.ma_nguoi_dung);
-                    localStorage.setItem('user_name', customerInfo.ten);
-                    localStorage.setItem('user_email', customerInfo.email);
-                    localStorage.setItem('user_phone', customerInfo.so_dien_thoai);
+                    sessionStorage.setItem('currentUserRole', 'customer');
+                    sessionStorage.setItem('user_id', customerInfo.ma_nguoi_dung);
+                    sessionStorage.setItem('user_name', customerInfo.ten);
+                    sessionStorage.setItem('user_email', customerInfo.email);
+                    sessionStorage.setItem('user_phone', customerInfo.so_dien_thoai);
                     window.location.href = '/customer/dashboard.html';
                 }
             });
@@ -417,6 +417,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.success && data.trip) {
                     const dbStatus = data.trip.TRANG_THAI;
+                    
+                    // Lưu thông tin chi tiết của chuyến xe để phục vụ hiển thị
+                    sessionStorage.setItem('driver_active_trip_pickup', data.trip.DIEM_DON);
+                    sessionStorage.setItem('driver_active_trip_drop', data.trip.DIEM_DEN);
+                    sessionStorage.setItem('driver_active_trip_price', data.trip.GIA_TIEN);
+                    sessionStorage.setItem('driver_active_trip_customer', data.trip.MA_NGUOI_DUNG);
+
                     if (dbStatus === 'DANG_DI') {
                         sessionStorage.setItem('driver_active_trip_status', 'picked_up');
                         updateOntripSheetDetails();
@@ -636,7 +643,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // 3. Hiển thị màn hình xác nhận thanh toán phía tài xế
                     showSheet(sheetPayment); 
-                    const price = sessionStorage.getItem('driver_active_trip_price') || '50000';
+                    
+                    let price = sessionStorage.getItem('driver_active_trip_price');
+                    if (!price) {
+                        try {
+                            const tripRes = await fetch(`${window.location.origin}/api/driver/trip/${currentTripId}`, {
+                                headers: { 'Authorization': 'Bearer ' + token }
+                            });
+                            const tripData = await tripRes.json();
+                            if (tripData.success && tripData.trip) {
+                                price = tripData.trip.GIA_TIEN;
+                                sessionStorage.setItem('driver_active_trip_price', price);
+                            }
+                        } catch (err) {
+                            console.error("Lỗi lấy giá chuyến đi khi hoàn thành:", err);
+                        }
+                    }
+                    price = price || '50000';
+
                     const amountEl = document.getElementById('payment-amount');
                     if (amountEl) {
                         amountEl.textContent = `${parseInt(price).toLocaleString('vi-VN')} đ`;
@@ -781,11 +805,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let simulationCoordinates = [];
     let simulationIndex = 0;
 
-    // Helper: Gọi Nominatim có lưu cache vào localStorage để giảm lag & chống rate-limit
+    // Helper: Gọi Nominatim có lưu cache vào sessionStorage để giảm lag & chống rate-limit
     async function cachedFetch(url, options = {}) {
         if (url.includes('nominatim.openstreetmap.org')) {
             const cacheKey = 'geo_cache_' + url;
-            const cached = localStorage.getItem(cacheKey);
+            const cached = sessionStorage.getItem(cacheKey);
             if (cached) {
                 return {
                     json: async () => JSON.parse(cached),
@@ -797,7 +821,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch(url, options);
                 if (response.ok) {
                     const text = await response.text();
-                    localStorage.setItem(cacheKey, text);
+                    sessionStorage.setItem(cacheKey, text);
                     return {
                         json: async () => JSON.parse(text),
                         ok: true,

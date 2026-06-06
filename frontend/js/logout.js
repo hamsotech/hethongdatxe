@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     logoutBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.removeItem('currentUserRole');
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('user_id');
-            localStorage.removeItem('user_name');
+            sessionStorage.removeItem('currentUserRole');
+            sessionStorage.removeItem('access_token');
+            sessionStorage.removeItem('user_id');
+            sessionStorage.removeItem('user_name');
             window.location.replace('/login.html');
         });
     });

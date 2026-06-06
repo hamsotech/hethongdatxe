@@ -18,7 +18,7 @@
         <p>Đang điều hướng...</p>
     </div>
     <script>
-        const role = localStorage.getItem('currentUserRole');
+        const role = sessionStorage.getItem('currentUserRole');
         if (role === 'driver') window.location.replace('/driver/dashboard.html');
         else if (role === 'admin') window.location.replace('/admin/dashboard.html');
         else window.location.replace('/login.html');

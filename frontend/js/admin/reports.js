@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('access_token');
+    const token = sessionStorage.getItem('access_token');
     if (!token) { window.location.replace('/login.html'); return; }
 
     const btnExportExcel = document.getElementById('btn-export-excel');

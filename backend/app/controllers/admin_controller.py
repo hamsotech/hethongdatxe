@@ -24,12 +24,20 @@ class AdminController:
         )
         drivers = cursor.fetchone()
 
+        cursor.execute(
+            "SELECT SUM(GIA_TIEN) AS total_revenue FROM CHUYEN_DI WHERE TRANG_THAI = 'HOAN_THANH'"
+        )
+        revenue_row = cursor.fetchone()
+        total_fare = float(revenue_row["total_revenue"]) if revenue_row and revenue_row.get("total_revenue") is not None else 0.0
+        system_revenue = round(total_fare * 0.20)
+
         conn.close()
 
         return {
             "total_users": users["total_users"],
             "total_trips": trips["total_trips"],
-            "total_drivers": drivers["total_drivers"]
+            "total_drivers": drivers["total_drivers"],
+            "total_revenue": system_revenue
         }
 
     @staticmethod

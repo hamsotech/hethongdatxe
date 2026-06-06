@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/customer.css?v=1.1">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1 class="header__title">Tài khoản</h1>
+        </header>
+
+        <main class="main-content">
+            <section class="profile-header">
+                <div class="profile-avatar-wrapper">
+                    <img src="/assets/avatar-an-danh-1.webp" alt="Avatar" class="profile-avatar" id="profile-avatar-img">
+                    <button class="btn-edit-avatar" id="btn-change-avatar">📷</button>
+                </div>
+            </section>
+
+            <form class="profile-form" id="profile-form">
+                <div class="form-group">
+                    <label class="form-group__label" for="profile-name">Họ và tên</label>
+                    <input type="text" id="profile-name" class="form-group__input" value="Đang tải..." readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-group__label" for="profile-phone">Số điện thoại</label>
+                    <input type="tel" id="profile-phone" class="form-group__input" value="Đang tải..." readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-group__label" for="profile-email">Email</label>
+                    <input type="email" id="profile-email" class="form-group__input" value="Đang tải..." readonly>
+                </div>
+
+                <button type="button" class="btn btn--secondary btn--full-width" id="btn-edit-profile">Chỉnh sửa</button>
+                <button type="submit" class="btn btn--primary btn--full-width hidden" id="btn-save-profile">Lưu thay đổi</button>
+            </form>
+
+            <div class="profile-driver-registration" id="driver-reg-section" style="margin-top: 1.5rem; padding: 1rem; border: 1px solid var(--color-border); border-radius: 8px; background-color: var(--color-white);">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--color-text-main);">Đăng ký làm Tài xế</h3>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 1rem;">Trở thành tài xế và bắt đầu kiếm thêm thu nhập ngay hôm nay.</p>
+                <form id="driver-reg-form">
+                    <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <label class="form-group__label" for="driver-car-type" style="font-size: 0.85rem;">Loại xe</label>
+                        <select id="driver-car-type" class="form-group__input" required style="padding: 0.5rem;">
+                            <option value="Xe máy" selected>Xe máy</option>
+                            <option value="Ô tô 4 chỗ">Ô tô 4 chỗ</option>
+                            <option value="Ô tô 7 chỗ">Ô tô 7 chỗ</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label class="form-group__label" for="driver-license-plate" style="font-size: 0.85rem;">Biển số xe</label>
+                        <input type="text" id="driver-license-plate" class="form-group__input" placeholder="Ví dụ: 59-P1 123.45" required style="padding: 0.5rem;">
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width" id="btn-submit-driver-reg">Gửi đăng ký tài xế</button>
+                </form>
+            </div>
+
+            <div class="profile-actions" style="margin-top: 1.5rem;">
+                <button class="btn btn--danger btn--full-width" id="btn-logout">Đăng xuất</button>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="/customer/dashboard.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">🏠</span>
+                <span class="bottom-nav__text">Trang chủ</span>
+            </a>
+            <a href="/customer/history.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">📜</span>
+                <span class="bottom-nav__text">Chuyến đi</span>
+            </a>
+            <a href="/customer/profile.html" class="bottom-nav__item bottom-nav__item--active">
+                <span class="bottom-nav__icon">👤</span>
+                <span class="bottom-nav__text">Tài khoản</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Modal Xác thực OTP Cập nhật Hồ sơ -->
+    <div id="profile-otp-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); backdrop-filter:blur(5px); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+        <div style="background:#fff; border-radius:16px; width:100%; max-width:380px; padding:2rem; box-shadow:0 12px 30px rgba(0,0,0,0.25); text-align:center;">
+            <h3 style="margin-bottom:0.5rem; font-size:1.4rem; color:var(--color-blue); font-weight:700;">Xác nhận thay đổi</h3>
+            <p id="profile-otp-subtitle" style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1.5rem;">Vui lòng nhập mã OTP gửi tới email hiện tại của bạn để xác nhận cập nhật thông tin nhạy cảm:</p>
+            <form id="profile-otp-form" style="display:flex; flex-direction:column; gap:12px;">
+                <input type="text" id="profile-otp" class="input-control" placeholder="Mã OTP 6 số" maxlength="6" required style="padding:0.75rem; border:1px solid var(--color-border); border-radius:8px; width:100%; box-sizing:border-box; text-align:center; font-size:1.2rem; letter-spacing:0.3rem;">
+                <button type="submit" id="btn-profile-otp-submit" class="btn btn--primary" style="width:100%; padding:0.75rem; font-size:1rem; font-weight:600;">Xác nhận lưu</button>
+                <button type="button" id="btn-close-profile-otp" class="btn btn--secondary" style="width:100%; padding:0.75rem; font-size:1rem;">Hủy</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/logout.js" defer></script>
+    <script src="/js/customer/profile.js?v=1.3" defer></script>
+</body>
+</html>

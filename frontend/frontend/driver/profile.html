@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài xế - Hồ sơ cá nhân</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/driver.css?v=1.1">
+</head>
+<body>
+    <div class="mobile-container" id="driver-profile">
+        <header class="header">
+            <h1 style="font-size: 1.25rem;">Hồ sơ cá nhân</h1>
+        </header>
+
+        <div class="content-section" style="text-align: center;">
+            <div style="width: 100px; height: 100px; background: var(--color-gray-200); border-radius: 50%; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--color-text-muted);">
+                👤
+            </div>
+            <h2 id="profile-name">Nguyễn Tài Xế</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 0.5rem;" id="profile-phone">+84 987 654 321</p>
+            <span class="badge badge--success">Tài Khoản Hoạt Động</span>
+        </div>
+
+        <div class="content-section">
+            <h3 style="margin-bottom: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">Thông tin phương tiện</h3>
+            <div class="list-item">
+                <span style="color: var(--color-text-muted);">Loại xe</span>
+                <strong>Honda Wave Alpha</strong>
+            </div>
+            <div class="list-item">
+                <span style="color: var(--color-text-muted);">Biển số</span>
+                <strong style="padding: 0.25rem 0.5rem; border: 1px solid var(--color-border); border-radius: 4px; background: #fff;">59-P1 123.45</strong>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 style="margin-bottom: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem;">Giấy tờ pháp lý</h3>
+            <div class="list-item">
+                <span style="color: var(--color-text-main);">Bằng lái xe (Hạng A1)</span>
+                <span class="badge badge--success">Đã xác minh</span>
+            </div>
+            <div class="list-item">
+                <span style="color: var(--color-text-main);">Giấy đăng ký xe</span>
+                <span class="badge badge--success">Đã xác minh</span>
+            </div>
+             <div class="list-item">
+                <span style="color: var(--color-text-main);">Lý lịch tư pháp</span>
+                <span class="badge badge--warning">Chờ duyệt</span>
+            </div>
+        </div>
+        
+        <div style="padding: 1rem;">
+             <button id="btn-logout" class="btn btn--outline" style="width: 100%; color: var(--color-red); border-color: var(--color-red);">Đăng xuất</button>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/driver/dashboard.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">🏠</span>
+                <span class="bottom-nav__text">Trang chủ</span>
+            </a>
+            <a href="/driver/trips.html"     class="bottom-nav__item">
+                <span class="bottom-nav__icon">📜</span>
+                <span class="bottom-nav__text">Chuyến xe</span>
+            </a>
+            <a href="/driver/earnings.html"  class="bottom-nav__item">
+                <span class="bottom-nav__icon">💵</span>
+                <span class="bottom-nav__text">Thu nhập</span>
+            </a>
+            <a href="/driver/profile.html"   class="bottom-nav__item bottom-nav__item--active">
+                <span class="bottom-nav__icon">👤</span>
+                <span class="bottom-nav__text">Cá nhân</span>
+            </a>
+        </nav>
+    </div>
+    <script src="/js/driver/profile.js"></script>
+    <script src="/js/logout.js"></script>
+</body>
+</html>

@@ -5,7 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const role = localStorage.getItem('currentUserRole');
+    const role = sessionStorage.getItem('currentUserRole');
     if (role === 'driver') { window.location.replace('/driver/dashboard.html'); return; }
     if (role === 'admin')  { window.location.replace('/admin/dashboard.html');  return; }
 
@@ -158,29 +158,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.success) {
-                localStorage.setItem('access_token', data.token);
-                localStorage.setItem('user_roles', JSON.stringify(data.roles));
-                localStorage.setItem('all_users_info', JSON.stringify(data.all_users));
+                sessionStorage.setItem('access_token', data.token);
+                sessionStorage.setItem('user_roles', JSON.stringify(data.roles));
+                sessionStorage.setItem('all_users_info', JSON.stringify(data.all_users));
 
                 function proceedWithRole(selectedRole) {
-                    localStorage.setItem('currentUserRole', selectedRole);
+                    sessionStorage.setItem('currentUserRole', selectedRole);
                     const userInfo = data.all_users[selectedRole];
-                    localStorage.setItem('user_name', userInfo.ten);
-                    localStorage.setItem('user_email', userInfo.email);
+                    sessionStorage.setItem('user_name', userInfo.ten);
+                    sessionStorage.setItem('user_email', userInfo.email);
                     if (userInfo.so_dien_thoai) {
-                        localStorage.setItem('user_phone', userInfo.so_dien_thoai);
+                        sessionStorage.setItem('user_phone', userInfo.so_dien_thoai);
                     } else {
-                        localStorage.removeItem('user_phone');
+                        sessionStorage.removeItem('user_phone');
                     }
 
                     if (selectedRole === 'admin') {
-                        localStorage.setItem('user_id', userInfo.ma_quan_tri);
+                        sessionStorage.setItem('user_id', userInfo.ma_quan_tri);
                         window.location.replace('/admin/dashboard.html');
                     } else if (selectedRole === 'driver') {
-                        localStorage.setItem('user_id', userInfo.ma_tai_xe);
+                        sessionStorage.setItem('user_id', userInfo.ma_tai_xe);
                         window.location.replace('/driver/dashboard.html');
                     } else {
-                        localStorage.setItem('user_id', userInfo.ma_nguoi_dung);
+                        sessionStorage.setItem('user_id', userInfo.ma_nguoi_dung);
                         window.location.replace('/customer/dashboard.html');
                     }
                 }

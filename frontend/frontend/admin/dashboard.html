@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Tổng quan</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/admin.css?v=1.1">
+</head>
+<body>
+    <div class="admin-layout" id="admin-app">
+        <aside class="sidebar">
+            <div class="sidebar__logo">RideConnect Admin</div>
+            <nav class="sidebar__menu" style="display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <a href="/admin/dashboard.html" class="sidebar__link sidebar__link--active">Tổng quan</a>
+                <a href="/admin/users.html" class="sidebar__link">Khách hàng</a>
+                <a href="/admin/drivers.html" class="sidebar__link">Tài xế</a>
+                <a href="/admin/trips.html" class="sidebar__link">Chuyến xe</a>
+                <a href="/admin/reports.html" class="sidebar__link">Báo cáo</a>
+                <a href="#" id="btn-logout" class="sidebar__link" style="color: var(--color-red); margin-top: auto;">Đăng xuất</a>
+            </nav>
+        </aside>
+        <main class="content-area">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h1 class="page-title" style="margin-bottom: 0;">Thống kê tổng quan</h1>
+                <div style="position: relative;">
+                    <button class="header__notification-btn" aria-label="Thông báo" id="btn-notifications"
+                        style="border:none;background:transparent;cursor:pointer;font-size:1.5rem;position:relative;display:flex;align-items:center;justify-content:center;">
+                        <span class="icon">🔔</span>
+                        <span class="notification-badge" id="nav-notification-badge" style="display:none;position:absolute;top:-4px;right:-4px;background:var(--color-red);color:#fff;font-size:0.7rem;font-weight:bold;border-radius:50%;width:18px;height:18px;align-items:center;justify-content:center;border:1px solid #fff;">0</span>
+                    </button>
+                    <div class="notification-dropdown" id="notification-dropdown" style="position:absolute;top:35px;right:0;width:280px;background:#fff;border:1px solid var(--color-border);border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.15);display:none;z-index:999;max-height:250px;overflow-y:auto;text-align:left;"></div>
+                </div>
+            </div>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-card__title">Tổng doanh thu hệ thống</div>
+                    <div class="kpi-card__value" id="kpi-revenue">0đ</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card__title">Tổng số chuyến đi</div>
+                    <div class="kpi-card__value" id="kpi-trips">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card__title">Tổng số khách hàng</div>
+                    <div class="kpi-card__value" id="kpi-users">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-card__title">Tổng số tài xế</div>
+                    <div class="kpi-card__value" id="kpi-drivers">0</div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3 class="chart-card__title">Xu hướng chuyến đi (Hằng tuần)</h3>
+                    <div class="chart-container" style="position: relative; height: 250px;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-card__title">Phân bố dịch vụ</h3>
+                    <div class="chart-container" style="position: relative; height: 250px;">
+                        <canvas id="serviceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mã chuyến</th>
+                            <th>Khách hàng</th>
+                            <th>Tài xế</th>
+                            <th>Trạng thái</th>
+                            <th>Thời gian</th>
+                        </tr>
+                    </thead>
+                    <tbody id="latest-trips">
+                        <tr>
+                            <td>TRP-9812</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Trần Tài Xế</td>
+                            <td><span class="badge badge--success">Hoàn thành</span></td>
+                            <td>5 phút trước</td>
+                        </tr>
+                        <tr>
+                            <td>TRP-9813</td>
+                            <td>Lê Thị B</td>
+                            <td>Phạm Văn C</td>
+                            <td><span class="badge badge--warning">Đang chạy</span></td>
+                            <td>12 phút trước</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/logout.js" defer></script>
+    <script src="/js/admin/dashboard.js"></script>
+</body>
+</html>

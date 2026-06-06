@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Chuyến xe</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/admin.css?v=1.1">
+</head>
+<body>
+    <div class="admin-layout" id="admin-trips">
+        <aside class="sidebar">
+            <div class="sidebar__logo">RideConnect Admin</div>
+            <nav class="sidebar__menu" style="display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <a href="/admin/dashboard.html" class="sidebar__link">Tổng quan</a>
+                <a href="/admin/users.html" class="sidebar__link">Khách hàng</a>
+                <a href="/admin/drivers.html" class="sidebar__link">Tài xế</a>
+                <a href="/admin/trips.html" class="sidebar__link sidebar__link--active">Chuyến xe</a>
+                <a href="/admin/reports.html" class="sidebar__link">Báo cáo</a>
+                <a href="#" id="btn-logout" class="sidebar__link" style="color: var(--color-red); margin-top: auto;">Đăng xuất</a>
+            </nav>
+        </aside>
+        <main class="content-area">
+            <h1 class="page-title">Quản lý toàn bộ chuyến xe</h1>
+            
+            <div class="toolbar">
+                <input type="text" class="input-control" id="search-trip" placeholder="Mã chuyến xe...">
+                <select class="input-control" id="filter-trip-status" style="max-width: 200px;">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="active">Đang chạy</option>
+                    <option value="completed">Hoàn thành</option>
+                    <option value="cancelled">Đã hủy</option>
+                </select>
+                <input type="date" class="input-control" id="filter-trip-date" style="max-width: 200px;">
+                <button class="btn btn--primary" id="btn-search-trip">Lọc chuyến</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mã chuyến</th>
+                            <th>Khách hàng</th>
+                            <th>Tài xế</th>
+                            <th>Điểm đón</th>
+                            <th>Điểm đến</th>
+                            <th>Giá tiền</th>
+                            <th>Thanh toán</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trip-list">
+                        <tr>
+                            <td>TRP-9812</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>Trần Tài Xế</td>
+                            <td>123 Đường 1, Q1</td>
+                            <td>456 Đường 2, Q2</td>
+                            <td>85.000đ</td>
+                            <td>Tiền mặt</td>
+                            <td><span class="badge badge--success">Hoàn thành</span></td>
+                        </tr>
+                        <tr>
+                            <td>TRP-9813</td>
+                            <td>Lê Thị B</td>
+                            <td>Phạm Văn C</td>
+                            <td>Khu CNC, Q9</td>
+                            <td>Trung tâm, Q1</td>
+                            <td>210.000đ</td>
+                            <td>Thẻ tín dụng</td>
+                            <td><span class="badge badge--warning">Đang chạy</span></td>
+                        </tr>
+                        <tr>
+                            <td>TRP-9814</td>
+                            <td>Trần C</td>
+                            <td>Không có</td>
+                            <td>Q. Bình Thạnh</td>
+                            <td>Q. Phú Nhuận</td>
+                            <td>45.000đ</td>
+                            <td>Ví điện tử</td>
+                            <td><span class="badge badge--danger">Đã hủy</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/logout.js" defer></script>
+    <script src="/js/admin/trips.js" defer></script>
+</body>
+</html>

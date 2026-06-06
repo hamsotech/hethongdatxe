@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử chuyến đi</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/customer.css?v=1.1">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1 class="header__title">Lịch sử chuyến đi</h1>
+        </header>
+
+        <main class="main-content">
+            <ul class="trip-history-list" id="trip-history-list">
+                <li class="trip-item trip-item--completed">
+                    <div class="trip-item__header">
+                        <span class="trip-item__date">12 Tháng 10, 14:30</span>
+                        <span class="trip-item__status trip-item__status--success">Hoàn thành</span>
+                    </div>
+                    <div class="trip-item__route">
+                        <p class="route-point">Bến xe Miền Đông</p>
+                        <p class="route-point">Sân bay Tân Sơn Nhất</p>
+                    </div>
+                    <div class="trip-item__footer">
+                        <span class="trip-item__price">150.000đ</span>
+                    </div>
+                </li>
+            </ul>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="/customer/dashboard.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">🏠</span>
+                <span class="bottom-nav__text">Trang chủ</span>
+            </a>
+            <a href="/customer/history.html" class="bottom-nav__item bottom-nav__item--active">
+                <span class="bottom-nav__icon">📜</span>
+                <span class="bottom-nav__text">Chuyến đi</span>
+            </a>
+            <a href="/customer/profile.html" class="bottom-nav__item">
+                <span class="bottom-nav__icon">👤</span>
+                <span class="bottom-nav__text">Tài khoản</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="/js/api.js?v=1.2" defer></script>
+    <script src="/js/customer/history.js?v=1.2" defer></script>
+</body>
+</html>

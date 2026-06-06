@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const role = localStorage.getItem('currentUserRole');
+    const role = sessionStorage.getItem('currentUserRole');
     if (role === 'driver') { window.location.replace('/driver/dashboard.html'); return; }
     if (role === 'admin')  { window.location.replace('/admin/dashboard.html');  return; }
 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Tài xế</title>
+    <link rel="stylesheet" href="/css/common.css?v=1.1">
+    <link rel="stylesheet" href="/css/admin.css?v=1.1">
+</head>
+<body>
+    <div class="admin-layout" id="admin-drivers">
+        <aside class="sidebar">
+            <div class="sidebar__logo">RideConnect Admin</div>
+            <nav class="sidebar__menu" style="display: flex; flex-direction: column; height: calc(100vh - 120px);">
+                <a href="/admin/dashboard.html" class="sidebar__link">Tổng quan</a>
+                <a href="/admin/users.html" class="sidebar__link">Khách hàng</a>
+                <a href="/admin/drivers.html" class="sidebar__link sidebar__link--active">Tài xế</a>
+                <a href="/admin/trips.html" class="sidebar__link">Chuyến xe</a>
+                <a href="/admin/reports.html" class="sidebar__link">Báo cáo</a>
+                <a href="#" id="btn-logout" class="sidebar__link" style="color: var(--color-red); margin-top: auto;">Đăng xuất</a>
+            </nav>
+        </aside>
+        <main class="content-area">
+            <h1 class="page-title">Quản lý đội ngũ tài xế</h1>
+            
+            <nav class="tabs">
+                <button class="tabs__btn tabs__btn--active" id="tab-active-drivers">Tài xế đang hoạt động</button>
+                <button class="tabs__btn" id="tab-pending-drivers">Hồ sơ chờ phê duyệt</button>
+            </nav>
+
+            <div id="content-active-drivers" style="display: block;">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mã TX</th>
+                                <th>Họ tên</th>
+                                <th>Số điện thoại</th>
+                                <th>Loại xe</th>
+                                <th>Biển số</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>DRV-5092</td>
+                                <td>Trần Tài Xế</td>
+                                <td>0987654321</td>
+                                <td>Xe máy</td>
+                                <td>59-P1 123.45</td>
+                                <td><span class="badge badge--success">Online</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="content-pending-drivers" style="display: none;">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Họ tên</th>
+                                <th>SĐT liên hệ</th>
+                                <th>Loại xe</th>
+                                <th>Biển số xe</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Phạm Văn Duyệt</td>
+                                <td>0933445566</td>
+                                <td>Ô tô 4 chỗ</td>
+                                <td>51G 999.99</td>
+                                <td>
+                                    <a href="#" style="color: var(--color-blue); text-decoration: underline; margin-right: 0.5rem;">Bằng lái.jpg</a>
+                                    <a href="#" style="color: var(--color-blue); text-decoration: underline;">Đăng ký.jpg</a>
+                                </td>
+                                <td>
+                                    <button class="btn btn--success" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Phê duyệt</button>
+                                    <button class="btn btn--danger" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Từ chối</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <script>
+                document.getElementById('tab-active-drivers').addEventListener('click', function() {
+                    this.classList.add('tabs__btn--active');
+                    document.getElementById('tab-pending-drivers').classList.remove('tabs__btn--active');
+                    document.getElementById('content-active-drivers').style.display = 'block';
+                    document.getElementById('content-pending-drivers').style.display = 'none';
+                });
+                document.getElementById('tab-pending-drivers').addEventListener('click', function() {
+                    this.classList.add('tabs__btn--active');
+                    document.getElementById('tab-active-drivers').classList.remove('tabs__btn--active');
+                    document.getElementById('content-pending-drivers').style.display = 'block';
+                    document.getElementById('content-active-drivers').style.display = 'none';
+                });
+            </script>
+        </main>
+    </div>
+    <script src="/js/api.js?v=1.2" defer></script>
+    <script src="/js/logout.js?v=1.2" defer></script>
+    <script src="/js/admin/drivers.js?v=1.3" defer></script>
+</body>
+</html>
